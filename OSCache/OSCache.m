@@ -97,8 +97,13 @@
         _semaphore = dispatch_semaphore_create(1);
         _totalCost = 0;
         
+#if TARGET_OS_IPHONE
+        
         //clean up in the event of a memory warning
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        
+#endif
+        
     }
     return self;
 }
