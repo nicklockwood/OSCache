@@ -33,6 +33,8 @@
 #import "OSCache.h"
 
 
+#import <libkern/OSAtomic.h>
+
 #import <Availability.h>
 #if !__has_feature(objc_arc)
 #error This class requires automatic reference counting
@@ -77,11 +79,7 @@
 @property (nonatomic, assign) BOOL delegateRespondsToWillEvictObject;
 @property (nonatomic, assign) BOOL currentlyCleaning;
 
-#if !OS_OBJECT_USE_OBJC
-@property (nonatomic, assign) dispatch_semaphore_t semaphore;
-#else
-@property (nonatomic, strong) dispatch_semaphore_t semaphore;
-#endif
+@property (nonatomic, readonly, assign) OSSpinLock spinLock;
 
 @end
 
@@ -94,7 +92,6 @@
     {
         //create storage
         _cache = [[NSMutableDictionary alloc] init];
-        _semaphore = dispatch_semaphore_create(1);
         _totalCost = 0;
         
 #if TARGET_OS_IPHONE
@@ -111,11 +108,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
-    
-#if !OS_OBJECT_USE_OBJC
-    dispatch_release(_semaphore);
-#endif
-    
 }
 
 - (void)setDelegate:(id<NSCacheDelegate>)delegate
@@ -126,23 +118,23 @@
 
 - (void)setCountLimit:(NSUInteger)lim
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     [super setCountLimit:lim];
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
     [self cleanUp];
 }
 
 - (void)setTotalCostLimit:(NSUInteger)lim
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     [super setTotalCostLimit:lim];
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
     [self cleanUp];
 }
 
 - (void)cleanUp
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     NSUInteger maxCount = [self countLimit] ?: INT_MAX;
     NSUInteger maxCost = [self totalCostLimit] ?: INT_MAX;
     NSUInteger totalCount = [_cache count];
@@ -173,16 +165,16 @@
             [_cache removeObjectForKey:key];
         }
     }
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
 }
 
 - (id)objectForKey:(id)key
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     OSCacheEntry *entry = _cache[key];
     entry.lastAccessed = CFAbsoluteTimeGetCurrent();
     id object = entry.object;
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
     return object;
 }
 
@@ -193,31 +185,31 @@
 
 - (void)setObject:(id)obj forKey:(id)key cost:(NSUInteger)g
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     NSAssert(!_currentlyCleaning, @"It is not possible to modify cache from within the implementation of this delegate method.");
     _totalCost -= [_cache[key] cost];
     _totalCost += g;
     _cache[key] = [OSCacheEntry entryWithObject:obj cost:g];
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
     [self cleanUp];
 }
 
 - (void)removeObjectForKey:(id)key
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     NSAssert(!_currentlyCleaning, @"It is not possible to modify cache from within the implementation of this delegate method.");
     _totalCost -= [_cache[key] cost];
     [_cache removeObjectForKey:key];
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
 }
 
 - (void)removeAllObjects
 {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    OSSpinLockLock(&_spinLock);
     NSAssert(!_currentlyCleaning, @"It is not possible to modify cache from within the implementation of this delegate method.");
     _totalCost = 0;
     [_cache removeAllObjects];
-    dispatch_semaphore_signal(_semaphore);
+    OSSpinLockUnlock(&_spinLock);
 }
 
 - (BOOL)evictsObjectsWithDiscardedContent
