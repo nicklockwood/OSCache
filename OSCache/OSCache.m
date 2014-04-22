@@ -75,7 +75,7 @@
 @interface OSCache ()
 
 @property (nonatomic, assign) NSUInteger totalCost;
-@property (nonatomic, strong) NSMutableDictionary *cache;
+@property (nonatomic, readonly, strong) NSMutableDictionary *cache;
 @property (nonatomic, assign) BOOL delegateRespondsToWillEvictObject;
 @property (nonatomic, assign) BOOL currentlyCleaning;
 
