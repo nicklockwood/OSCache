@@ -77,7 +77,7 @@
 @property (nonatomic, assign) BOOL delegateRespondsToWillEvictObject;
 @property (nonatomic, assign) BOOL currentlyCleaning;
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
+#if !OS_OBJECT_USE_OBJC
 @property (nonatomic, assign) dispatch_semaphore_t semaphore;
 #else
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
@@ -112,7 +112,7 @@
 {
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
     
-#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
+#if !OS_OBJECT_USE_OBJC
     dispatch_release(_semaphore);
 #endif
     
