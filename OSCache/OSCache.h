@@ -32,6 +32,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class OSCache;
+@protocol OSCacheDelegate <NSCacheDelegate>
+
+@optional
+-(BOOL)cache:(OSCache *)cache shouldEvictObject:(id)obj;
+
+@end
+
+
 @interface OSCache : NSCache
+
+@property (nonatomic, weak) id<OSCacheDelegate> osDelegate;
 
 @end
