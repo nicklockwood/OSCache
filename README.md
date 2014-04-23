@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nicklockwood/OSCache.svg)](https://travis-ci.org/nicklockwood/OSCache)
+
 Purpose
 --------------
 
