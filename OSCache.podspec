@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'OSCache'
-  s.version  = '1.0.1'
+  s.version  = '1.0'
   s.license  = 'zlib'
   s.summary  = 'An open-source re-implementation of NSCache that behaves in a predictable, debuggable way.'
   s.homepage = 'https://github.com/nicklockwood/OSCache'
