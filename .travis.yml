@@ -2,4 +2,4 @@ language: objective-c
 before_script:
   - brew update
   - brew upgrade xctool
-script: xctool test -project Tests/OSCache/OSCacheTests.xcodeproj -scheme OSCacheTests -sdk iphonesimulator
+script: xctool test -project Tests/OSCacheTests.xcodeproj -scheme OSCacheTests -sdk iphonesimulator

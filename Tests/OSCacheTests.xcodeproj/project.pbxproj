@@ -10,7 +10,6 @@
 		01D28C891907BFC80021C719 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D28C881907BFC80021C719 /* XCTest.framework */; };
 		01D28C8A1907BFC80021C719 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D28C6F1907BFC80021C719 /* Foundation.framework */; };
 		01D28C8B1907BFC80021C719 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D28C731907BFC80021C719 /* UIKit.framework */; };
-		01D28C931907BFC80021C719 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 01D28C911907BFC80021C719 /* InfoPlist.strings */; };
 		01D28C951907BFC80021C719 /* OSCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D28C941907BFC80021C719 /* OSCacheTests.m */; };
 		01D28CB01907C19E0021C719 /* OSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D28CAE1907BFEC0021C719 /* OSCache.m */; };
 /* End PBXBuildFile section */
@@ -22,7 +21,6 @@
 		01D28C871907BFC80021C719 /* OSCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D28C881907BFC80021C719 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		01D28C901907BFC80021C719 /* OSCacheTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OSCacheTests-Info.plist"; sourceTree = "<group>"; };
-		01D28C921907BFC80021C719 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		01D28C941907BFC80021C719 /* OSCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSCacheTests.m; sourceTree = "<group>"; };
 		01D28CAD1907BFEC0021C719 /* OSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCache.h; sourceTree = "<group>"; };
 		01D28CAE1907BFEC0021C719 /* OSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCache.m; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				01D28C901907BFC80021C719 /* OSCacheTests-Info.plist */,
-				01D28C911907BFC80021C719 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -96,8 +93,8 @@
 				01D28CAE1907BFEC0021C719 /* OSCache.m */,
 			);
 			name = OSCache;
-			path = ../../OSCache;
-			sourceTree = "<group>";
+			path = ../OSCache;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -155,7 +152,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01D28C931907BFC80021C719 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,17 +168,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		01D28C911907BFC80021C719 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				01D28C921907BFC80021C719 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		01D28C961907BFC80021C719 /* Debug */ = {
@@ -388,6 +373,7 @@
 				01D28C9D1907BFC80021C719 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
