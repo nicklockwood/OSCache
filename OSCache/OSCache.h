@@ -1,7 +1,7 @@
 //
 //  OSCache.h
 //
-//  Version 1.0
+//  Version 1.1
 //
 //  Created by Nick Lockwood on 01/01/2014.
 //  Copyright (C) 2014 Charcoal Design
@@ -32,6 +32,19 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface OSCache : NSCache
+
+- (NSUInteger)count;
+- (NSUInteger)totalCost;
+
+@end
+
+
+@protocol OSCacheDelegate <NSCacheDelegate>
+@optional
+
+- (BOOL)cache:(OSCache *)cache shouldEvictObject:(id)entry;
+- (void)cache:(OSCache *)cache willEvictObject:(id)entry;
 
 @end

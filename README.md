@@ -30,3 +30,50 @@ Installation
 --------------
 
 To install OSCache into your app, drag the OSCache.h and .m files into your project. Create and use OSCache instances exactly as you would a normal NSCache.
+
+
+Methods
+----------
+
+In addition to all of the inherited NSCache methods, OSCache adds the following methods:
+
+    - (NSUInteger)count;
+    
+The total number of items currently stored in the cache;
+    
+    - (NSUInteger)totalCost;
+
+The total cost of all items currently stored in the cache;
+
+
+OSCacheDelegate
+--------------
+
+The OSCache delegate now implements the OSCacheDelegate protocol, which is a superset of NSCacheDelegate. You can declare your delegate as supporting either the OSCacheDelegate or NSCacheDelegate protocols; either will work without warnings.
+ 
+OSCacheDelegate adds the following optional method:
+
+    - (BOOL)cache:(OSCache *)cache shouldEvictObject:(id)entry;
+
+This method is called before OSCache evicts an object from the cache, giving you an opportunity to veto the eviction. You can use this method to implement your own cache clearing criteria (e.g. you could decide to only empty the cache if another cache is already empty).
+
+The method will only be called as the result of adding an item to the cache, or in the event of a memory warning; it is not called if you explicitly remove and object using -removeObjectForKey: or -removeAllObjects. Objects will always be evicted in order of least recently used.
+
+
+Release Notes
+---------------
+
+Version 1.1
+
+- Exposed the -count  and -totalCost properties
+- Added OSCacheDelegate protocol, which is a superset of the NSCacheDelegate
+- Added optional -cache:shouldEvictObject: delegate method
+- If cache is cleared as the result of a memory warning, -cache:shouldEvictObject: and -cache:willEvictObject: is now called for each item
+- Now uses sequence numbers instead of time for sorting cache items (more reliable)
+- Now uses NSLock instead of dispatch_semaphore (more appropriate)
+- OSCache still behaves as if it inherits from NSCache, but no longer actually does so, avoiding possible breakage if Apple changes the NSCache implementation in future
+- Added unit tests
+
+Version 1.0
+
+- First Release
