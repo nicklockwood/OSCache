@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 
 @class OSCache;
-@protocol OSCacheDelegate <NSCacheDelegate>
+@protocol OSCacheDelegate <NSObject>
 
 @optional
 -(BOOL)cache:(OSCache *)cache shouldEvictObject:(id)obj;
