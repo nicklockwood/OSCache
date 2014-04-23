@@ -261,8 +261,8 @@
     [_lock lock];
     _totalCost -= [_cache[key] cost];
     _totalCost += g;
-    _cache[key] = [OSCacheEntry entryWithObject:obj cost:g sequenceNumber:_sequenceNumber];
-    if ((_sequenceNumber++) == 0)
+    _cache[key] = [OSCacheEntry entryWithObject:obj cost:g sequenceNumber:_sequenceNumber++];
+    if (_sequenceNumber < 0)
     {
         [self resequence];
     }

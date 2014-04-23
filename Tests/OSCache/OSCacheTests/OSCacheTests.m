@@ -15,6 +15,7 @@
 - (void)cleanUpAllObjects;
 - (void)resequence;
 - (NSDictionary *)cache;
+- (void)setSequenceNumber:(NSInteger)number;
 
 @end
 
@@ -122,6 +123,23 @@
     [self.cache removeObjectForKey:@"foo"];
     [self.cache resequence];
     
+    XCTAssertEqualObjects([innerCache[@"bar"] valueForKey:@"sequenceNumber"], @0, @"Resequence failed");
+    XCTAssertEqualObjects([innerCache[@"baz"] valueForKey:@"sequenceNumber"], @1, @"Resequence failed");
+}
+
+- (void)testResequenceTrigger
+{
+    [self.cache setObject:@1 forKey:@"foo"];
+    [self.cache setObject:@2 forKey:@"bar"];
+    
+    //first object should now be bar with sequence number of 1
+    [self.cache removeObjectForKey:@"foo"];
+    
+    //should trigger resequence
+    [self.cache setSequenceNumber:NSIntegerMax];
+    [self.cache setObject:@3 forKey:@"baz"];
+    
+    NSDictionary *innerCache = [self.cache cache];
     XCTAssertEqualObjects([innerCache[@"bar"] valueForKey:@"sequenceNumber"], @0, @"Resequence failed");
     XCTAssertEqualObjects([innerCache[@"baz"] valueForKey:@"sequenceNumber"], @1, @"Resequence failed");
 }
