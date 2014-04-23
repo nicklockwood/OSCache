@@ -77,6 +77,7 @@
 @property (nonatomic, assign) NSUInteger totalCost;
 @property (nonatomic, readonly, strong) NSMutableDictionary *cache;
 @property (nonatomic, assign) BOOL delegateRespondsToWillEvictObject;
+@property (nonatomic, assign) BOOL osDelegateRespondsToShouldEvictObject;
 @property (nonatomic, assign) BOOL currentlyCleaning;
 
 @property (nonatomic, readonly, assign) OSSpinLock spinLock;
@@ -116,6 +117,12 @@
     _delegateRespondsToWillEvictObject = [delegate respondsToSelector:@selector(cache:willEvictObject:)];
 }
 
+- (void)setOsDelegate:(id<OSCacheDelegate>)osDelegate
+{
+    _osDelegate = osDelegate;
+    _osDelegateRespondsToShouldEvictObject = [osDelegate respondsToSelector:@selector(cache:shouldEvictObject:)];
+}
+
 - (void)setCountLimit:(NSUInteger)lim
 {
     OSSpinLockLock(&_spinLock);
@@ -153,6 +160,13 @@
             if (totalCount <= maxCount && _totalCost <= maxCost)
             {
                 break;
+            }
+            if (_osDelegateRespondsToShouldEvictObject)
+            {
+                if (![self.osDelegate cache:self shouldEvictObject:[_cache objectForKey:key]])
+                {
+                    continue;
+                }
             }
             totalCount --;
             _totalCost -= [ _cache[key] cost];
@@ -198,8 +212,19 @@
 {
     OSSpinLockLock(&_spinLock);
     NSAssert(!_currentlyCleaning, @"It is not possible to modify cache from within the implementation of this delegate method.");
-    _totalCost -= [_cache[key] cost];
-    [_cache removeObjectForKey:key];
+    BOOL shouldEvict = YES;
+    if (_osDelegateRespondsToShouldEvictObject)
+    {
+        if (![self.osDelegate cache:self shouldEvictObject:[_cache objectForKey:key]])
+        {
+            shouldEvict = NO;
+        }
+    }
+    if (shouldEvict)
+    {
+        _totalCost -= [_cache[key] cost];
+        [_cache removeObjectForKey:key];
+    }
     OSSpinLockUnlock(&_spinLock);
 }
 
@@ -208,7 +233,20 @@
     OSSpinLockLock(&_spinLock);
     NSAssert(!_currentlyCleaning, @"It is not possible to modify cache from within the implementation of this delegate method.");
     _totalCost = 0;
-    [_cache removeAllObjects];
+    if (_osDelegateRespondsToShouldEvictObject)
+    {
+        for (id key in [_cache allKeys])
+        {
+            if ([self.osDelegate cache:self shouldEvictObject:[_cache objectForKey:key]])
+            {
+                [_cache removeObjectForKey:key];
+            }
+        }
+    }
+    else
+    {
+        [_cache removeAllObjects];
+    }
     OSSpinLockUnlock(&_spinLock);
 }
 
