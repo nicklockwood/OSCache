@@ -1,7 +1,7 @@
 //
 //  OSCache.m
 //
-//  Version 1.1
+//  Version 1.1.1
 //
 //  Created by Nick Lockwood on 01/01/2014.
 //  Copyright (C) 2014 Charcoal Design
@@ -225,21 +225,6 @@
     [_lock unlock];
 }
 
-- (id)objectForKey:(id)key
-{
-    [_lock lock];
-    OSCacheEntry *entry = _cache[key];
-    entry.sequenceNumber = _sequenceNumber++;
-    id object = entry.object;
-    [_lock unlock];
-    return object;
-}
-
-- (void)setObject:(id)obj forKey:(id)key
-{
-    [self setObject:obj forKey:key cost:0];
-}
-
 - (void)resequence
 {
     //sort, oldest first
@@ -253,6 +238,25 @@
     {
         entry.sequenceNumber = index++;
     }
+}
+
+- (id)objectForKey:(id)key
+{
+    [_lock lock];
+    OSCacheEntry *entry = _cache[key];
+    entry.sequenceNumber = _sequenceNumber++;
+    if (_sequenceNumber < 0)
+    {
+        [self resequence];
+    }
+    id object = entry.object;
+    [_lock unlock];
+    return object;
+}
+
+- (void)setObject:(id)obj forKey:(id)key
+{
+    [self setObject:obj forKey:key cost:0];
 }
 
 - (void)setObject:(id)obj forKey:(id)key cost:(NSUInteger)g

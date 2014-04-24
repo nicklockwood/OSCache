@@ -142,6 +142,15 @@
     NSDictionary *innerCache = [self.cache cache];
     XCTAssertEqualObjects([innerCache[@"bar"] valueForKey:@"sequenceNumber"], @0, @"Resequence failed");
     XCTAssertEqualObjects([innerCache[@"baz"] valueForKey:@"sequenceNumber"], @1, @"Resequence failed");
+    
+    //first object should now be baz with sequence number of 1
+    [self.cache removeObjectForKey:@"bar"];
+    
+    //should also trigger resequence
+    [self.cache setSequenceNumber:NSIntegerMax];
+    [self.cache objectForKey:@"baz"];
+    
+    XCTAssertEqualObjects([innerCache[@"baz"] valueForKey:@"sequenceNumber"], @0, @"Resequence failed");
 }
 
 - (void)testName

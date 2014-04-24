@@ -63,6 +63,10 @@ The method will only be called as the result of adding an item to the cache, or 
 Release Notes
 ---------------
 
+Version 1.1.1
+
+- Fixed bug where sequence numbers would not be resequenced if an overflow happens when reading from cache
+
 Version 1.1
 
 - Exposed the `-count` and `-totalCost` properties

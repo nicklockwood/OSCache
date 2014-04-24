@@ -1,7 +1,7 @@
 //
 //  OSCache.h
 //
-//  Version 1.1
+//  Version 1.1.1
 //
 //  Created by Nick Lockwood on 01/01/2014.
 //  Copyright (C) 2014 Charcoal Design

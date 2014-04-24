@@ -1,5 +1,5 @@
 OSCache 
-version 1.1, April 23rd, 2014
+version 1.1.1, April 24th, 2014
 
 Copyright (C) 2014 Charcoal Design
 
