@@ -122,7 +122,7 @@
 		01D28C641907BFC80021C719 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Charcoal Design";
 				TargetAttributes = {
 					01D28C861907BFC80021C719 = {
@@ -130,7 +130,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 01D28C671907BFC80021C719 /* Build configuration list for PBXProject "OSCacheTests" */;
+			buildConfigurationList = 01D28C671907BFC80021C719 /* Build configuration list for PBXProject "oscachetests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -200,6 +200,7 @@
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -211,7 +212,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -243,6 +244,9 @@
 					"-Wno-gnu-statement-expression",
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-sign-compare",
+					"-Wno-documentation-unknown-command",
+					"-Wno-undef",
+					"-Wno-reserved-id-macro",
 				);
 			};
 			name = Debug;
@@ -282,7 +286,7 @@
 				GCC_SHORT_ENUMS = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -314,6 +318,9 @@
 					"-Wno-gnu-statement-expression",
 					"-Wno-objc-missing-property-synthesis",
 					"-Wno-sign-compare",
+					"-Wno-documentation-unknown-command",
+					"-Wno-undef",
+					"-Wno-reserved-id-macro",
 				);
 			};
 			name = Release;
@@ -332,6 +339,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "OSCacheTests/OSCacheTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.charcoaldesign.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = OSCacheTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -348,6 +356,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "OSCacheTests/OSCacheTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.charcoaldesign.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = OSCacheTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -357,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		01D28C671907BFC80021C719 /* Build configuration list for PBXProject "OSCacheTests" */ = {
+		01D28C671907BFC80021C719 /* Build configuration list for PBXProject "oscachetests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				01D28C961907BFC80021C719 /* Debug */,

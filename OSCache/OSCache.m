@@ -1,7 +1,7 @@
 //
 //  OSCache.m
 //
-//  Version 1.1.1
+//  Version 1.1.2
 //
 //  Created by Nick Lockwood on 01/01/2014.
 //  Copyright (C) 2014 Charcoal Design
@@ -31,6 +31,7 @@
 //
 
 #import "OSCache.h"
+#import <TargetConditionals.h>
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #endif
@@ -318,7 +319,14 @@
 
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
+
     [invocation invokeWithTarget:nil];
+
+#pragma clang diagnostic pop
+
 }
 
 @end

@@ -1,7 +1,7 @@
 //
 //  OSCache.h
 //
-//  Version 1.1.1
+//  Version 1.1.2
 //
 //  Created by Nick Lockwood on 01/01/2014.
 //  Copyright (C) 2014 Charcoal Design
@@ -32,6 +32,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface OSCache : NSCache
 
@@ -48,3 +49,5 @@
 - (void)cache:(OSCache *)cache willEvictObject:(id)entry;
 
 @end
+
+NS_ASSUME_NONNULL_END
