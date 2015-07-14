@@ -48,7 +48,9 @@
 				01D28C6E1907BFC80021C719 /* Frameworks */,
 				01D28C6D1907BFC80021C719 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		01D28C6D1907BFC80021C719 /* Products */ = {
 			isa = PBXGroup;

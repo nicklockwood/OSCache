@@ -34,18 +34,22 @@ Installation
 To install **OSCache** into your app, drag the `OSCache.h` and `.m` files into your project. Create and use `OSCache` instances exactly as you would a normal `NSCache`.
 
 
-Methods
-----------
+Properties & Methods
+---------------------
 
-In addition to all of the inherited NSCache methods, OSCache adds the following methods:
+In addition to all of the inherited NSCache methods, OSCache adds the following:
 
-    - (NSUInteger)count;
+    @property (nonatomic, readonly) NSUInteger count;
     
 The total number of items currently stored in the cache;
     
-    - (NSUInteger)totalCost;
+    @property (nonatomic, readonly) totalCost;
 
 The total cost of all items currently stored in the cache;
+
+    - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block;
+    
+Enumerates the keys and values stored in the cache.
 
 
 OSCacheDelegate
@@ -62,8 +66,22 @@ This method is called before **OSCache** evicts an object from the cache, giving
 The method will only be called as the result of adding an item to the cache, or in the event of a memory warning; it is not called if you explicitly remove and object using `-removeObjectForKey:` or `-removeAllObjects`. Objects will always be evicted in order of least recently used.
 
 
+Performance
+--------------
+
+When the cache still has space in it, reading, writing and removing entries has constant time (O(1)). When the cache is full, insertion time degrades to linear (O(n)), but reading and removal remain constant.
+
+For this reason, you should ideally size your cache so that it will never get full, but if that isn't possible, it's better to select a smaller size, as very large sizes will degrade significantly in performance when they fill up.
+
+
 Release Notes
 ---------------
+
+Version 1.2
+
+- Substantially improved insertion performance when cache is full
+- Fixed bug where private container objects were passed to delegate instead of cached object
+- Added enumeration and subscripting access for cached objects and keys
 
 Version 1.1.2
 

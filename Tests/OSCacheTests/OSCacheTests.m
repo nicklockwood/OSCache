@@ -159,4 +159,122 @@
     XCTAssertEqualObjects(self.cache.name, @"Hello", @"Name failed");
 }
 
+#define TEST_COUNT 2048
+
+- (void)testAccessPerf
+{
+    [self measureMetrics:[[self class] defaultPerformanceMetrics] automaticallyStartMeasuring:NO forBlock:^{
+
+        self.cache = [[OSCache alloc] init];
+        self.cache.countLimit = TEST_COUNT;
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i)];
+        }
+
+        [self startMeasuring];
+
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            (void)[self.cache objectForKey:@(i)];
+        }
+
+        [self stopMeasuring];
+
+        self.cache = nil;
+    }];
+}
+
+- (void)testInsertionPerf
+{
+    [self measureMetrics:[[self class] defaultPerformanceMetrics] automaticallyStartMeasuring:NO forBlock:^{
+
+        self.cache = [[OSCache alloc] init];
+        self.cache.countLimit = TEST_COUNT;
+
+        [self startMeasuring];
+
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i)];
+        }
+
+        [self stopMeasuring];
+
+        self.cache = nil;
+    }];
+}
+
+- (void)testDeletionPerf
+{
+    [self measureMetrics:[[self class] defaultPerformanceMetrics] automaticallyStartMeasuring:NO forBlock:^{
+
+        self.cache = [[OSCache alloc] init];
+        self.cache.countLimit = TEST_COUNT;
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i)];
+        }
+
+        [self startMeasuring];
+
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            (void)[self.cache removeObjectForKey:@(i)];
+        }
+
+        [self stopMeasuring];
+
+        self.cache = nil;
+    }];
+}
+
+- (void)testOverflowInsertionsPerf
+{
+    [self measureMetrics:[[self class] defaultPerformanceMetrics] automaticallyStartMeasuring:NO forBlock:^{
+
+        self.cache = [[OSCache alloc] init];
+        self.cache.countLimit = TEST_COUNT;
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i)];
+        }
+
+        [self startMeasuring];
+
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i + TEST_COUNT)];
+        }
+
+        [self stopMeasuring];
+
+        self.cache = nil;
+    }];
+}
+
+- (void)testOverflowDeletionPerf
+{
+    [self measureMetrics:[[self class] defaultPerformanceMetrics] automaticallyStartMeasuring:NO forBlock:^{
+
+        self.cache = [[OSCache alloc] init];
+        self.cache.countLimit = TEST_COUNT;
+        for (int i = 0; i < TEST_COUNT * 2; i++)
+        {
+            [self.cache setObject:@(i) forKey:@(i)];
+        }
+
+        [self startMeasuring];
+
+        for (int i = 0; i < TEST_COUNT; i++)
+        {
+            [self.cache removeObjectForKey:@(i)];
+        }
+
+        [self stopMeasuring];
+
+        self.cache = nil;
+    }];
+}
+
 @end
