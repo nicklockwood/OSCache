@@ -22,7 +22,7 @@
 
 @interface OSCacheTests : XCTestCase
 
-@property (nonatomic, strong) OSCache *cache;
+@property (nonatomic, strong) OSCache<NSString *, NSNumber *> *cache;
 
 @end
 
