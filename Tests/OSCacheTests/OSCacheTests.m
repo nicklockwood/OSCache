@@ -8,17 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "OSCache.h"
-
-
-@interface OSCache (Private)
-
-- (void)cleanUpAllObjects;
-- (void)resequence;
-- (NSDictionary *)cache;
-- (void)setSequenceNumber:(NSInteger)number;
-
-@end
-
+#import "OSCache_Private.h"
 
 @interface OSCacheTests : XCTestCase
 
@@ -31,6 +21,7 @@
 
 - (void)setUp
 {
+    [super setUp];
     self.cache = [[OSCache alloc] init];
     self.cache.countLimit = 3;
     self.cache.totalCostLimit = 100;
@@ -38,6 +29,7 @@
 
 - (void)tearDown
 {
+    [super tearDown];
     self.cache = nil;
 }
 

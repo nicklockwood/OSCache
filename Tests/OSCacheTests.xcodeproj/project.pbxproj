@@ -12,6 +12,7 @@
 		01D28C8B1907BFC80021C719 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D28C731907BFC80021C719 /* UIKit.framework */; };
 		01D28C951907BFC80021C719 /* OSCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D28C941907BFC80021C719 /* OSCacheTests.m */; };
 		01D28CB01907C19E0021C719 /* OSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D28CAE1907BFEC0021C719 /* OSCache.m */; };
+		FC63AE0F1C3DA85B00179DBC /* OSCacheTestsSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63AE0E1C3DA85B00179DBC /* OSCacheTestsSwift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,9 @@
 		01D28C941907BFC80021C719 /* OSCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OSCacheTests.m; sourceTree = "<group>"; };
 		01D28CAD1907BFEC0021C719 /* OSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCache.h; sourceTree = "<group>"; };
 		01D28CAE1907BFEC0021C719 /* OSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCache.m; sourceTree = "<group>"; };
+		FC63AE0D1C3DA85A00179DBC /* OSCacheTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OSCacheTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		FC63AE0E1C3DA85B00179DBC /* OSCacheTestsSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCacheTestsSwift.swift; sourceTree = "<group>"; };
+		FC63AE101C3DAE1400179DBC /* OSCache_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSCache_Private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +78,11 @@
 		01D28C8E1907BFC80021C719 /* OSCacheTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC63AE101C3DAE1400179DBC /* OSCache_Private.h */,
 				01D28C941907BFC80021C719 /* OSCacheTests.m */,
+				FC63AE0E1C3DA85B00179DBC /* OSCacheTestsSwift.swift */,
 				01D28C8F1907BFC80021C719 /* Supporting Files */,
+				FC63AE0D1C3DA85A00179DBC /* OSCacheTests-Bridging-Header.h */,
 			);
 			path = OSCacheTests;
 			sourceTree = "<group>";
@@ -124,6 +131,7 @@
 		01D28C641907BFC80021C719 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Charcoal Design";
 				TargetAttributes = {
@@ -132,7 +140,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 01D28C671907BFC80021C719 /* Build configuration list for PBXProject "oscachetests" */;
+			buildConfigurationList = 01D28C671907BFC80021C719 /* Build configuration list for PBXProject "OSCacheTests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -166,6 +174,7 @@
 			files = (
 				01D28CB01907C19E0021C719 /* OSCache.m in Sources */,
 				01D28C951907BFC80021C719 /* OSCacheTests.m in Sources */,
+				FC63AE0F1C3DA85B00179DBC /* OSCacheTestsSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,8 +350,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "OSCacheTests/OSCacheTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.charcoaldesign.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = OSCacheTests;
+				SWIFT_OBJC_BRIDGING_HEADER = "OSCacheTests/OSCacheTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -358,8 +370,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "OSCacheTests/OSCacheTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.charcoaldesign.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = OSCacheTests;
+				SWIFT_OBJC_BRIDGING_HEADER = "OSCacheTests/OSCacheTests-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -368,7 +382,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		01D28C671907BFC80021C719 /* Build configuration list for PBXProject "oscachetests" */ = {
+		01D28C671907BFC80021C719 /* Build configuration list for PBXProject "OSCacheTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				01D28C961907BFC80021C719 /* Debug */,
