@@ -85,7 +85,7 @@
     NSLock *_lock;
 }
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init]))
     {
@@ -394,9 +394,9 @@
 
 @implementation OSCache
 
-+ (id)alloc
++ (instancetype)allocWithZone:(struct _NSZone *)zone
 {
-    return (OSCache *)[OSCache_Private alloc];
+    return (OSCache *)[OSCache_Private allocWithZone:zone];
 }
 
 - (id)objectForKeyedSubscript:(__unused id<NSCopying>)key { return nil; }
